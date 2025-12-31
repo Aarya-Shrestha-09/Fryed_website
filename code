@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FRYED | Digital Crisps</title>
+    <!-- Tailwind CSS for modern layout -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Importing pixel-art style fonts */
+        @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap');
+
+        :root {
+            --fry-red: #e63946;
+            --fry-yellow: #ffb703;
+            --fry-dark: #121212;
+        }
+
+        body {
+            background-color: var(--fry-dark);
+            color: white;
+            font-family: 'VT323', monospace;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        .pixel-font {
+            font-family: 'Press Start 2P', cursive;
+            line-height: 1.5;
+        }
+
+        /* Pixel Art Fries Container in CSS Grid */
+        .fries-pixel {
+            display: grid;
+            grid-template-columns: repeat(7, 4px);
+            grid-template-rows: repeat(8, 4px);
+            gap: 0;
+            margin-right: 12px;
+        }
+        
+        .f-r { background-color: var(--fry-red); }
+        .f-y { background-color: var(--fry-yellow); }
+        .f-t { background-color: transparent; }
+
+        /* Retro Diner Checkered Background */
+        .checkered-bg {
+            background-image: 
+                linear-gradient(45deg, #1a1a1a 25%, transparent 25%), 
+                linear-gradient(-45deg, #1a1a1a 25%, transparent 25%), 
+                linear-gradient(45deg, transparent 75%, #1a1a1a 75%), 
+                linear-gradient(-45deg, transparent 75%, #1a1a1a 75%);
+            background-size: 40px 40px;
+            background-position: 0 0, 0 20px, 20px -20px, -20px 0px;
+        }
+
+        /* Classic Pixel Border */
+        .pixel-border {
+            border: 4px solid white;
+            box-shadow: 6px 6px 0px var(--fry-red);
+        }
+
+        /* Owner Card Frame effect */
+        .owner-frame {
+            background: #fff;
+            padding: 20px;
+            border: 10px solid #333;
+            box-shadow: 10px 10px 0px rgba(0,0,0,0.5);
+            transform: rotate(-2deg);
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .owner-frame:nth-child(even) { transform: rotate(2deg); }
+        .owner-frame:hover { transform: rotate(0deg) scale(1.05); z-index: 10; }
+
+        .photo-placeholder {
+            width: 100%;
+            aspect-ratio: 1/1;
+            background: #eee;
+            border: 4px solid #222;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #888;
+            font-size: 4rem;
+        }
+
+        .floating { animation: float 4s ease-in-out infinite; }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-25px); }
+        }
+
+        /* Menu Item Card */
+        .menu-card {
+            background: white;
+            color: black;
+            border: 4px solid black;
+            padding: 1.5rem;
+            box-shadow: 8px 8px 0px var(--fry-yellow);
+            transition: transform 0.2s;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .menu-card:hover { transform: translate(-4px, -4px); box-shadow: 12px 12px 0px var(--fry-red); }
+
+        /* Specials Ticket Styling */
+        .ticket-bg {
+            background-color: #fdfae1;
+            color: #1a1a1a;
+            border-left: 8px dashed #333;
+            border-right: 8px dashed #333;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .nav-btn { cursor: pointer; transition: all 0.2s; }
+        .nav-btn:hover { color: var(--fry-yellow); }
+        .nav-btn.active { color: var(--fry-yellow); border-bottom: 4px solid var(--fry-red); }
+
+        .hidden-page { display: none; }
+        
+        input, textarea {
+            background: transparent !important;
+            border-bottom: 2px solid #333 !important;
+            border-radius: 0;
+        }
+        
+        input:focus, textarea:focus {
+            outline: none;
+            border-bottom: 2px solid var(--fry-red) !important;
+            background: rgba(230, 57, 70, 0.05) !important;
+        }
+    </style>
+</head>
+<body class="checkered-bg min-h-screen flex flex-col">
+
+    <!-- Navigation Bar -->
+    <nav class="p-8 flex justify-between items-center w-full sticky top-0 z-50 bg-[#121212]/90 backdrop-blur-sm px-4 md:px-12 border-b-4 border-[#e63946]">
+        <div class="flex items-center nav-btn" onclick="showPage('home')">
+            <!-- CSS Pixel Art Fries -->
+            <div class="fries-pixel">
+                <div class="f-t"></div><div class="f-y"></div><div class="f-t"></div><div class="f-y"></div><div class="f-t"></div><div class="f-y"></div><div class="f-t"></div>
+                <div class="f-t"></div><div class="f-y"></div><div class="f-t"></div><div class="f-y"></div><div class="f-t"></div><div class="f-y"></div><div class="f-t"></div>
+                <div class="f-t"></div><div class="f-y"></div><div class="f-y"></div><div class="f-y"></div><div class="f-y"></div><div class="f-y"></div><div class="f-t"></div>
+                <div class="f-r"></div><div class="f-r"></div><div class="f-r"></div><div class="f-r"></div><div class="f-r"></div><div class="f-r"></div><div class="f-r"></div>
+                <div class="f-r"></div><div class="f-r"></div><div class="f-r"></div><div class="f-r"></div><div class="f-r"></div><div class="f-r"></div><div class="f-r"></div>
+                <div class="f-r"></div><div class="f-r"></div><div class="f-r"></div><div class="f-r"></div><div class="f-r"></div><div class="f-r"></div><div class="f-r"></div>
+                <div class="f-t"></div><div class="f-r"></div><div class="f-r"></div><div class="f-r"></div><div class="f-r"></div><div class="f-r"></div><div class="f-t"></div>
+                <div class="f-t"></div><div class="f-t"></div><div class="f-r"></div><div class="f-r"></div><div class="f-r"></div><div class="f-t"></div><div class="f-t"></div>
+            </div>
+            <div class="text-3xl pixel-font text-[#e63946] tracking-tighter">FRYED</div>
+        </div>
+        <div class="flex gap-4 md:gap-8">
+            <button id="nav-menu" class="pixel-font text-sm md:text-xl nav-btn border-2 border-[#ffb703] px-3 py-1" onclick="showPage('menu')">MENU</button>
+            <button id="nav-specials" class="pixel-font text-sm md:text-xl nav-btn border-2 border-white px-3 py-1 bg-[#e63946]" onclick="showPage('specials')">SPECIALS</button>
+        </div>
+    </nav>
+
+    <!-- HOME PAGE -->
+    <div id="home-page" class="page-content">
+        <header class="flex flex-col items-center justify-center text-center p-6 mt-10">
+            <div class="mb-12 floating">
+                <img src="https://images.unsplash.com/photo-1594212699903-ec8a3eca50f5?auto=format&fit=crop&q=80&w=400&h=400" alt="FRYED Logo" class="w-48 md:w-64 pixel-border bg-white p-4 rotate-3">
+            </div>
+            <h1 class="text-4xl md:text-6xl mb-6 font-bold tracking-tighter text-[#ffb703] uppercase italic pixel-font">FRYED STUDIO</h1>
+            <p class="text-2xl md:text-3xl max-w-2xl mb-12 font-medium opacity-90 leading-relaxed px-4">
+                A student-run game development studio serving up the crispest interactive experiences directly from the computer lab.
+            </p>
+        </header>
+
+        <section class="py-20 bg-[#e63946] text-white">
+            <div class="max-w-6xl mx-auto px-6">
+                <div class="mb-16 text-center">
+                    <h2 class="text-5xl md:text-7xl font-black uppercase italic pixel-font">The Founders</h2>
+                    <div class="h-2 w-32 bg-[#ffb703] mx-auto mt-4"></div>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-16">
+                    <div class="owner-frame text-black">
+                        <div class="photo-placeholder mb-6">🧑‍💻</div>
+                        <h3 class="text-4xl font-bold uppercase border-b-4 border-black mb-2 italic">AARYA</h3>
+                        <p class="text-2xl font-bold text-gray-600 uppercase">Founder</p>
+                    </div>
+                    <div class="owner-frame text-black">
+                        <div class="photo-placeholder mb-6">🎨</div>
+                        <h3 class="text-4xl font-bold uppercase border-b-4 border-black mb-2 italic">SUYASH</h3>
+                        <p class="text-2xl font-bold text-gray-600 uppercase">Founder</p>
+                    </div>
+                    <div class="owner-frame text-black">
+                        <div class="photo-placeholder mb-6">🕹️</div>
+                        <h3 class="text-4xl font-bold uppercase border-b-4 border-black mb-2 italic">NIRVAN</h3>
+                        <p class="text-2xl font-bold text-gray-600 uppercase">Founder</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- MENU PAGE -->
+    <div id="menu-page" class="page-content hidden-page py-12 px-6 flex-grow">
+        <div class="max-w-4xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-5xl md:text-7xl font-black uppercase italic pixel-font text-[#ffb703]">THE MENU</h2>
+                <p class="text-3xl mt-4 opacity-80 font-bold">Fresh Games, Served Hot.</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                <!-- SPOONS GAME -->
+                <div class="menu-card h-full">
+                    <div>
+                        <div class="text-5xl mb-4">🥄</div>
+                        <div class="flex justify-between items-center mb-4">
+                            <h3 class="text-4xl font-bold uppercase italic leading-none">Spoons</h3>
+                            <span class="text-2xl font-bold text-[#e63946]">$0.00</span>
+                        </div>
+                        <p class="text-xl mb-6 text-gray-700">
+                            The classic card game, re-imagined. Compete to grab the spoon before they're all gone. Watch your opponents closely—the digital version lets the sneakier players try to swipe spoons when no one is looking!
+                        </p>
+                    </div>
+                    <button class="w-full bg-black text-white py-3 pixel-font text-[10px] hover:bg-[#e63946] transition-colors">START MATCH</button>
+                </div>
+
+                <!-- CORPORATE LADDER GAME -->
+                <div class="menu-card h-full">
+                    <div>
+                        <div class="text-5xl mb-4">🏢</div>
+                        <div class="flex justify-between items-center mb-4">
+                            <h3 class="text-4xl font-bold uppercase italic leading-none">Corporate Ladder</h3>
+                            <span class="text-2xl font-bold text-[#e63946]">$0.00</span>
+                        </div>
+                        <p class="text-xl mb-6 text-gray-700">
+                            Team up with friends in this cooperative multiplayer sim. Coordinate your efforts to build the world's most successful pixel-business. Communication is key to reaching the top of the tower!
+                        </p>
+                    </div>
+                    <button class="w-full bg-black text-white py-3 pixel-font text-[10px] hover:bg-[#ffb703] hover:text-black transition-colors">JOIN OFFICE</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SPECIALS PAGE (SUBMISSION FORM) -->
+    <div id="specials-page" class="page-content hidden-page py-12 px-6 flex-grow">
+        <div class="max-w-xl mx-auto">
+            <div class="text-center mb-12">
+                <h2 class="text-5xl font-black uppercase italic pixel-font text-[#ffb703]">OFF-MENU</h2>
+                <p class="text-3xl mt-2 opacity-80 font-bold">Request a Custom Special</p>
+            </div>
+            <div class="ticket-bg p-8 md:p-12">
+                <div class="border-b-4 border-black border-double pb-4 mb-8 text-center">
+                    <p class="text-2xl font-bold">FRYED KITCHEN - GUEST CHECK</p>
+                    <p class="text-lg opacity-70">DATE: <span id="current-date"></span></p>
+                </div>
+                <form action="https://formsubmit.co/fryedcontext@gmail.com" method="POST" class="space-y-8">
+                    <!-- FormSubmit Configuration -->
+                    <input type="hidden" name="_subject" value="New Game Order from FRYED Site!">
+                    <input type="hidden" name="_captcha" value="false">
+                    
+                    <div>
+                        <label class="block text-xl font-bold uppercase mb-1">Guest Name</label>
+                        <input type="text" name="name" required class="w-full p-2 text-2xl font-bold" placeholder="WHO'S HUNGRY?">
+                    </div>
+                    <div>
+                        <label class="block text-xl font-bold uppercase mb-1">Reply Email</label>
+                        <input type="email" name="email" required class="w-full p-2 text-2xl font-bold" placeholder="DIGITAL ADDRESS">
+                    </div>
+                    <div>
+                        <label class="block text-xl font-bold uppercase mb-1">The Order (Description)</label>
+                        <textarea name="description" required class="w-full p-2 text-2xl font-bold h-40 resize-none" placeholder="DESCRIBE YOUR DREAM GAME..."></textarea>
+                    </div>
+                    <button type="submit" class="bg-black text-white pixel-font py-4 px-8 w-full hover:bg-[#e63946] transition-colors shadow-lg mt-4">SUBMIT ORDER</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="p-12 text-center bg-[#121212] border-t-8 border-[#ffb703] mt-auto">
+        <p class="text-xl opacity-60 uppercase tracking-widest font-bold">
+            &copy; 2024 FRYED STUDIO. Freshly baked in the computer lab.
+        </p>
+    </footer>
+
+    <script>
+        // Set dynamic date on load
+        document.getElementById('current-date').innerText = new Date().toLocaleDateString();
+
+        // Multi-page navigation function
+        function showPage(pageId) {
+            // Hide all pages
+            document.querySelectorAll('.page-content').forEach(p => p.classList.add('hidden-page'));
+            // Reset nav buttons
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+            
+            // Show requested page
+            const targetPage = document.getElementById(pageId + '-page');
+            if(targetPage) targetPage.classList.remove('hidden-page');
+            
+            // Highlight current button
+            const navBtn = document.getElementById('nav-' + pageId);
+            if(navBtn) navBtn.classList.add('active');
+            
+            window.scrollTo(0, 0);
+        }
+
+        // Parallax effect for the diner checkered background
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            document.body.style.backgroundPosition = `0 ${scrolled * 0.2}px`;
+        });
+    </script>
+</body>
+</html>
